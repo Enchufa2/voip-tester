@@ -1,0 +1,22 @@
+If you want to run the client under NAT, follow this steps:
+
+For the register server connection:
+
+  1. Execute VoIPTester with -Djava.rmi.server.hostname=<public_dir>
+  2. On the VoIPTester client, select the client port <port> which you want to you use. The client IP will be the "localhost" associated. (Note: in some Unix systems, "localhost" is usually associated with the local loop, so be careful with that and assure that the "localhost" is the direction <private_dir> which you want to use).
+  3. Open the port <port> selected for the client on the Firewall/Router/local server. On the NAT rules, redirect incoming connections on port <port> to the localhost direction <private_dir>. 
+
+Example:
+  client internal/private IP = 192.168.1.10 = <private_direction> = "localhost"
+  client external/public IP = 80.80.80.10 = <public_direction>
+
+  Execute VoIPTester: java -Djava.rmi.server.hostname=80.80.80.10
+  Select client port: 4662 = <port>
+
+  On the Router/NAT redirect incoming connections on port 4662 (must be open) to 192.168.1.10:1999
+
+For the timestamps protocol sockets:
+
+  1. Select the interface and the local ip <private_direction_ts> you want to use to send/receive data.
+  2. Select the port <port_ts> you want to use to make/serve the data requests.
+  3. Type in the "public" ip field the public/external IP <public_direction> that is available outside the internal network. Create a new rule in your NAT/Firewall to redirect incoming connections on port <port_ts> to the local direction <private_direction_ts>
